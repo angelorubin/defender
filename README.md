@@ -1,6 +1,6 @@
 # Defender
 
-Defender um package ACL para Laravel 5 que utiliza grupos e permissões.
+Defender é um package ACL para Laravel 5 que utiliza grupos e permissões.
 Com Segurança e Usabilidade em mente, este projeto tem como objetivo prover o controle de acesso da sua aplicação.
 
 > Estado Atual do Package
@@ -24,7 +24,7 @@ Com Segurança e Usabilidade em mente, este projeto tem como objetivo prover o c
 
 ### 1. Dependência
 
-Defender pode ser instalado através do composer.  
+Defender pode ser instalado através do <a href="https://getcomposer.org" target="_blank">composer</a>.
 Para que o package seja adicionado automaticamente ao seu arquivo `composer.json` execute o seguinte comando:
 
 ```shell
@@ -43,7 +43,7 @@ ou se preferir, adicione o seguinte trecho manualmente:
 
 ### 2. Provider
 
-Para usar o Defender em sua aplicação Laravel, é necessário registrar o package no seu arquivo `config/app.php`. Adicione o seguinte código na no fim da seção `providers`
+Para usar o Defender em sua aplicação Laravel, é necessário registrar o package no seu arquivo `config/app.php`. Adicione o seguinte código no fim da seção `providers`
 
 ```php
 // file START ommited
@@ -92,7 +92,7 @@ Para usar a facade `Defender`, você precisa registrá-la no seu arquivo `config
 
 ### 4. Defender Middlewares (optional)
 
-Caso você tenha a necessidade realizar o controle de acesso diretamente nas rotas, o Defender vem "de fábrica" com alguns middlewares que abordam os casos mais comuns. Para utilizá-los é necessário registrá-los no seu arquivo `app/Http/Kernel.php`.
+Caso você tenha a necessidade de realizar o controle de acesso diretamente nas rotas, o Defender vem com alguns middlewares (nativos) que abordam os casos mais comuns. Para utilizá-los é necessário registrá-los no seu arquivo `app/Http/Kernel.php`.
 
 ```php
 protected $routeMiddleware = [
@@ -110,15 +110,15 @@ protected $routeMiddleware = [
 
 A utilização desses middlewares é explicada na próxima seção.
 
-#### 4.1 - Create your own middleware
+#### 4.1 - Create your own middleware (Crie seu próprio middleware)
 
 Caso os middlewares padrões do Defender não atendam as suas necessidades, você pode criar seu próprio middleware e utilizar a API do Defender para realizar o controle de acesso. 
 
-//TODO: Link para api
+//TODO: Link para API
 
 ## Usando o Defender
 
-O Defender realiza apenas o controle de acesso em sua aplicação, ou seja, a tarefa de autenticação é realizada pelo `Auth` que faz parte do core do Laravel.
+O Defender realiza apenas o controle de acesso em sua aplicação, ou seja, a tarefa de autenticação é realizada pelo `Auth` que faz parte do núcleo do Laravel.
 
 ### Usando o Middleware
 
@@ -144,7 +144,7 @@ Route::get('foo', ['middleware' => ['auth', 'needsPermission'], 'can' => ['user.
 }]);
 ```
 
-Quando você passa um array de permissões, a rota é executada apenas se o usuário possui todas as permissões. Caso você queira que a rota execute quando o usuário tem pelo menos uma das permissões, basta adicionar `'any' => true`.
+Quando você passa um array de permissões, a rota é executada apenas se o usuário possui todas as permissões. Caso você queira que a rota seja executada quando o usuário tem pelo menos uma das permissões, basta adicionar `'any' => true`.
 
 ```php
 Route::get('foo', ['middleware' => ['auth', 'needsPermission'], 'can' => ['user.index', 'user.create'], 'any' => true, function()
@@ -175,7 +175,7 @@ Route::get('foo', ['middleware' => ['auth', 'needsRole'], 'can' => ['admin', 'me
 }]);
 ```
 
-Quando você passa um array de permissões, a rota é executada apenas se o usuário possui todas as permissões. Caso você queira que a rota execute quando o usuário tem pelo menos uma das permissões, basta adicionar `'any' => true`.
+Quando você passa um array de permissões, a rota é executada apenas se o usuário possui todas as permissões. Caso você queira que a rota seja executada quando o usuário tem pelo menos uma das permissões, basta adicionar `'any' => true`.
 
 ```php
 Route::get('foo', ['middleware' => ['auth', 'needsRole'], 'is' => ['admin', 'member'], 'any' => true, function()
@@ -230,7 +230,7 @@ Route::get('foo', ['middleware' => ['auth', 'needsRole'], 'is' => ['admin', 'mem
 
 ### Usando a trait
 
-Para adicionar as funcionalidades do Defender, é necessário adicionar trait `HasDefenderTrait`no seu modelo de usuário (normalmente o `App\User`).
+Para adicionar as funcionalidades do Defender, é necessário adicionar trait `HasDefenderTrait` no seu modelo de usuário (normalmente o `App\User`).
 
 ```php
 <?php namespace App;
@@ -250,9 +250,9 @@ Esta trait, além de configurar os relacionamentos, adicionará os seguintes mé
 
 #####`public function can($permission)`:
 
-Este método verificar se o usuário logado no sistema possui a permissão `$permission`  
+Este método verifica se o usuário logado no sistema possui a permissão `$permission`  
 
-No Defender existem 2 tipos de permissões: `Permissões de Usuário` e `Permissões de Grupo`. Por padrão as permissões que o usuário herda, são permissões dos grupos que ele pertence.. Porém, sempre que uma permissão de usuário for definida, ela terá precedência sobre a permissão de grupo.
+No Defender existem 2 tipos de permissões: `Permissões de Usuário` e `Permissões de Grupo`. Por padrão as permissões que o usuário herda, são permissões dos grupos que ele pertence. Porém, sempre que uma permissão de usuário for definida, ela terá precedência sobre a permissão de grupo.
 
 ```php
 public function foo(Authenticable $user)
@@ -265,7 +265,7 @@ public function foo(Authenticable $user)
 
 ##### `public function canWithRolePermissions($permission)`:
 
-Este método funciona praticamente da mesma forma que o método anterior, a única diferença é que as permissões de usuário não são consideradas, ou seja, apenas as permissões dos grupos que usuário pertence são usadas na hora de verificar a permissão.
+Este método funciona praticamente da mesma forma que o método anterior, a única diferença é que as permissões de usuário não são consideradas, ou seja, apenas as permissões dos grupos que o usuário pertence serão utilizadas no momento de verificar a permissão.
 
 ```php
 public function foo(Authenticable $user)
@@ -387,7 +387,7 @@ public function foo(Authenticable $user)
 
 ##### `public function revokePermissions()`:
 
-Remove todas as permissões de usuário do usuário.
+Remove todas as permissões do usuário.
 
 ```php
 public function foo(Authenticable $user)
